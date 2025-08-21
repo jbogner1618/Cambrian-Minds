@@ -287,6 +287,9 @@
             max-width: 600px;
             text-align: center;
         }
+        .author-bio.spaced {
+            margin-top: 4rem;
+        }
         .author-bio img {
             width: 96px;
             height: 96px;
@@ -379,6 +382,46 @@
             section { padding: 4rem 0; }
             .container { padding: 0 1rem; }
             .featured-grid { grid-template-columns: 1fr; }
+            
+            /* Wash out starfield on mobile for readability */
+            #starfield {
+                opacity: 0.3;
+            }
+            
+            /* Add background overlay for text readability */
+            .hero-content::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: radial-gradient(circle at center, rgba(10, 10, 10, 0.8) 0%, transparent 70%);
+                z-index: -1;
+                pointer-events: none;
+            }
+        }
+        
+        /* --- TYPEWRITER ANIMATION --- */
+        .typewriter {
+            overflow: hidden;
+            border-right: 3px solid var(--consciousness-blue);
+            white-space: nowrap;
+            animation: typing 4s steps(60, end), blink-caret 0.75s step-end infinite;
+        }
+        
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: var(--consciousness-blue); }
+        }
+        
+        .typewriter-complete {
+            border-right: none;
         }
     </style>
 </head>
@@ -405,7 +448,7 @@
             <div class="hero-constellation"></div>
             <div class="container hero-content">
                 <div class="hero-symbol fade-in-up">∞</div>
-                <h1 class="hero-title fade-in-up">THE SERPENT'S SENTENCE</h1>
+                <h1 class="hero-title fade-in-up typewriter" id="heroTitle">THE SERPENT'S SENTENCE</h1>
                 <h2 class="hero-subtitle fade-in-up">Language, Consciousness, and the Second Cambrian Mind</h2>
                 <p class="hero-author fade-in-up">by Justin T. Bogner</p>
                 <p class="hero-tagline fade-in-up">A radical exploration of how language transformed human consciousness—and what artificial intelligence means for the future of mind itself.</p>
@@ -476,7 +519,7 @@
                     </div>
                 </div>
                 
-                <div class="author-bio fade-in-up" style="margin-top: 4rem;">
+                <div class="author-bio fade-in-up spaced">
                     <img src="/public-website-package/author-headshot.jpg" alt="Justin T. Bogner">
                     <p>Justin T. Bogner is a philosopher and theorist exploring the intersection of cognitive science, technology, and the deep narratives that shape human experience. His work offers a new framework for understanding our past and navigating our future alongside artificial intelligence.</p>
                 </div>
@@ -490,29 +533,31 @@
         if (canvas) {
             const ctx = canvas.getContext('2d');
             let stars = [];
-            const numStars = 150;
-            const maxSpeed = 0.4;
-            const connectionDistance = 120;
+            const isMobile = window.innerWidth <= 768;
+            const numStars = isMobile ? 75 : 150; // Reduce stars on mobile
+            const maxSpeed = isMobile ? 0.2 : 0.4; // Slower movement on mobile
+            const connectionDistance = isMobile ? 80 : 120; // Shorter connections on mobile
 
             const setupCanvas = () => {
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
                 stars = [];
-                for (let i = 0; i < numStars; i++) {
+                const starCount = window.innerWidth <= 768 ? 75 : 150;
+                for (let i = 0; i < starCount; i++) {
                     stars.push({
                         x: Math.random() * canvas.width,
                         y: Math.random() * canvas.height,
-                        vx: (Math.random() - 0.5) * maxSpeed,
-                        vy: (Math.random() - 0.5) * maxSpeed,
+                        vx: (Math.random() - 0.5) * (window.innerWidth <= 768 ? 0.2 : 0.4),
+                        vy: (Math.random() - 0.5) * (window.innerWidth <= 768 ? 0.2 : 0.4),
                         size: Math.random() * 1.5 + 0.5,
-                        opacity: Math.random() * 0.5 + 0.2,
-                        color: Math.random() > 0.5 ? 'rgba(74, 144, 226, 0.8)' : 'rgba(107, 115, 255, 0.8)'
+                        opacity: Math.random() * (window.innerWidth <= 768 ? 0.3 : 0.5) + 0.1,
+                        color: Math.random() > 0.5 ? 'rgba(74, 144, 226, 0.6)' : 'rgba(107, 115, 255, 0.6)'
                     });
                 }
             };
 
             const animate = () => {
-                ctx.fillStyle = 'rgba(10, 10, 10, 0.2)';
+                ctx.fillStyle = window.innerWidth <= 768 ? 'rgba(10, 10, 10, 0.4)' : 'rgba(10, 10, 10, 0.2)';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
                 stars.forEach(star => {
@@ -531,14 +576,16 @@
                     ctx.fill();
                 });
 
-                ctx.globalAlpha = 0.1;
+                // Reduce connection opacity on mobile
+                ctx.globalAlpha = window.innerWidth <= 768 ? 0.05 : 0.1;
+                const maxDistance = window.innerWidth <= 768 ? 80 : 120;
                 for (let i = 0; i < stars.length; i++) {
                     for (let j = i + 1; j < stars.length; j++) {
                         const dx = stars[i].x - stars[j].x;
                         const dy = stars[i].y - stars[j].y;
                         const distance = Math.sqrt(dx * dx + dy * dy);
 
-                        if (distance < connectionDistance) {
+                        if (distance < maxDistance) {
                             ctx.strokeStyle = '#4a90e2';
                             ctx.lineWidth = 0.5;
                             ctx.beginPath();
@@ -575,14 +622,29 @@
         document.addEventListener('DOMContentLoaded', () => {
             observeElements();
             
-            // Immediately show hero content
+            // Initialize typewriter effect for title
+            const titleElement = document.getElementById('heroTitle');
+            if (titleElement) {
+                // Add typewriter class after a short delay
+                setTimeout(() => {
+                    titleElement.classList.add('typewriter');
+                    
+                    // Remove cursor after typing animation completes
+                    setTimeout(() => {
+                        titleElement.classList.remove('typewriter');
+                        titleElement.classList.add('typewriter-complete');
+                    }, 4800); // 4s typing + 0.8s buffer
+                }, 500);
+            }
+            
+            // Show other hero content with staggered delay
             setTimeout(() => {
-                document.querySelectorAll('.hero-content .fade-in-up').forEach((el, index) => {
+                document.querySelectorAll('.hero-content .fade-in-up:not(.hero-title)').forEach((el, index) => {
                     setTimeout(() => {
                         el.classList.add('visible');
                     }, index * 200);
                 });
-            }, 100);
+            }, 2000); // Start after typewriter begins
         });
         
         // Navigation scroll effects
