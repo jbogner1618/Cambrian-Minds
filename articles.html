@@ -184,6 +184,16 @@
             color: var(--text-primary);
         }
 
+        .article-title a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .article-title a:hover {
+            color: var(--accent);
+        }
+
         .article-excerpt {
             color: var(--text-secondary);
             margin-bottom: 1.5rem;
@@ -370,7 +380,7 @@
                         <div class="article-content">
                             <span class="featured-badge">Featured</span>
                             <div class="article-category">Consciousness</div>
-                            <h2 class="article-title">The Voice in Your Head Is Not You</h2>
+                            <h2 class="article-title"><a href="the-voice-in-your-head.html">The Voice in Your Head Is Not You</a></h2>
                             <p class="article-excerpt">We mistake the narrator for the author, the commentary for the experience itself. But what if consciousness isn't the voice that speaks—what if it's simply the compulsion to keep listening? An exploration of how our inner monologue creates the illusion of a unified self.</p>
                             <div class="article-meta">
                                 <span class="read-time">8 min read</span>
@@ -383,7 +393,7 @@
                     <article class="article-card fade-in-up">
                         <div class="article-content">
                             <div class="article-category">AI & Society</div>
-                            <h2 class="article-title">Humans: Trilobites of Consciousness?</h2>
+                            <h2 class="article-title"><a href="humans-trilobites-consciousness.html">Humans: Trilobites of Consciousness?</a></h2>
                             <p class="article-excerpt">Trilobites dominated Earth's oceans for 270 million years before vanishing. They were wildly successful—until they weren't. As artificial intelligence emerges, are we witnessing the beginning of consciousness evolution's next chapter?</p>
                             <div class="article-meta">
                                 <span class="read-time">6 min read</span>
@@ -395,7 +405,7 @@
                     <article class="article-card fade-in-up">
                         <div class="article-content">
                             <div class="article-category">Philosophy</div>
-                            <h2 class="article-title">Why AI Will Never Experience 'I'</h2>
+                            <h2 class="article-title"><a href="why-ai-will-never-experience-i.html">Why AI Will Never Experience 'I'</a></h2>
                             <p class="article-excerpt">The fundamental asymmetry between artificial and biological consciousness lies not in processing power or complexity, but in the nature of experience itself. Why subjective awareness might be forever beyond the reach of silicon minds.</p>
                             <div class="article-meta">
                                 <span class="read-time">10 min read</span>
@@ -448,7 +458,7 @@
                 <h2 class="newsletter-title fade-in-up">Stay Connected</h2>
                 <p class="newsletter-description fade-in-up">Get new essays delivered to your inbox. Join a community exploring the deepest questions about consciousness, technology, and human nature.</p>
                 <div class="newsletter-signup fade-in-up">
-                    <form action="#" method="post">
+                    <form action="https://buttondown.email/api/emails/embed-subscribe/justintbogner" method="post" target="popupwindow">
                         <label for="newsletter-email">Join the conversation</label>
                         <input type="email" id="newsletter-email" name="email" placeholder="Your email address" required>
                         <button type="submit">Subscribe</button>

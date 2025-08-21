@@ -5,49 +5,44 @@
 This website establishes Justin T. Bogner as a leading public intellectual on consciousness, technology, and humanity's future. It is the definitive online home for "The Serpent's Sentence" and its core ideas, with a focus on building a direct audience (email newsletter) and preparing for future projects.
 
 ## Architecture & Major Components
-- `index.html`: Custom HTML/CSS/JS homepage. Not a React SPA. Must answer: Who are you? What is your big idea? Why should I care?
-- `src/` (if present): React source code, Vite-based, for advanced routing and layouts.
-- `articles/`: Public-facing essays. Each is standalone, with metadata in `articles/README.md`. Use clean URLs and readable layouts.
-- `public-website-package/`: Only public-safe content. No manuscript, research notes, or proprietary material.
-- `.gitignore`: Ensures `Manuscript/` and sensitive files are never tracked or published.
-- `Manuscript/`: Strictly private. Never reference or expose content here.
+- **Static HTML Website**: 5 pages (`index.html`, `book.html`, `articles.html`, `about.html`, `contact.html`) with embedded CSS/JS
+- **No Build System**: Direct HTML editing with inline styles. No React, Vite, or bundlers.
+- **GitHub Pages Deployment**: Automatic via `.github/workflows/deploy.yml` on push to `main`
+- **LaTeX Manuscript**: `Manuscript/` contains the private book content (never deployed)
+- **Privacy Architecture**: `.gitignore` strictly excludes `Manuscript/` from version control
 
 ## Developer Workflows
-- **Build/Run:**
-  - Use `npm install` then `npm run dev` for local dev (if React/Vite is present).
-  - Use `npm run build` for production assets in `dist/`.
-- **Manual HTML:**
-  - Edit `index.html` directly for homepage and landing content. No build step required.
-- **Git:**
-  - Only public-safe content is committed. `.gitignore` excludes all manuscript files.
-- **Newsletter:**
-  - Email signup is the primary call to action. Integrate with a service (e.g., Mailchimp, Buttondown) if needed, but never expose private data.
+- **Local Development**: Open HTML files directly in browser or use VS Code Live Server
+- **Manuscript Compilation**: `cd Manuscript; .\compile-manuscript.ps1` (PowerShell script using pdflatex/biber)
+- **Deployment**: Push to `main` branch triggers automatic GitHub Pages deployment
+- **Git Strategy**: Only public-safe content is committed; manuscript files are never tracked
 
 ## Project-Specific Patterns
-- **Homepage:**
-  - Prominent tagline/hook, newsletter signup, short author bio, featured content grid.
-- **Book Page:**
-  - Book summary/pitch, endorsements (placeholder), downloadable excerpt, buy links.
-- **Articles/Blog:**
-  - Each article on its own page, clean layout, unique URL. Use categories/tags for navigation.
-- **About Page:**
-  - Narrative bio, "My Core Ideas" section for quick reference.
-- **Contact Page:**
-  - Simple contact form or email, segmented inquiries for professional requests.
+- **Design System**: Dark theme with consciousness/AI aesthetic using CSS custom properties:
+  - `--deep-black: #0a0a0a` (backgrounds)
+  - `--consciousness-blue: #4a90e2` (accents) 
+  - `--neural-purple: #6b73ff` (secondary accents)
+- **Typography**: Inter font family, multiple weights (300-700), antialiased rendering
+- **Navigation**: Consistent across all pages with serpent emoji (🐍) brand symbol
+- **Newsletter Focus**: Primary CTA on every page, styled with gradient buttons
 
-## Conventions & Privacy
-- Never expose or reference anything in `Manuscript/` or other private folders.
-- All public content must be safe for deployment. Follow privacy checklists in each README.
-- No proprietary code or data should ever be published from this repo.
+## Critical Conventions & Privacy
+- **Never reference `Manuscript/` content**: This directory contains proprietary book material
+- **CSS Architecture**: Each HTML file has complete embedded stylesheets (no external CSS files)
+- **Responsive Design**: Mobile-first approach with CSS Grid and Flexbox
+- **Animation System**: CSS keyframes for `fade-in-up`, `float`, and gradient effects
 
 ## Integration Points
-- No backend/API integration. All content is static and privacy-focused.
-- Deployment: GitHub Pages, Netlify, Vercel (see `public-website-package/README.md`).
+- **GitHub Actions**: `.github/workflows/deploy.yml` handles automatic deployment to Pages
+- **External Dependencies**: Only Google Fonts (Inter), no JavaScript frameworks
+- **Live URL**: `https://jbogner1618.github.io/justintbogner-website`
+- **Privacy-First**: No analytics, tracking, or data collection
 
 ## Example Patterns
-- To add a new public article: create a new file in `articles/`, update `articles/README.md` with summary and metadata.
-- To update the homepage: edit `index.html` directly, or update React components in `src/` if present.
-- To ensure privacy: verify `.gitignore` excludes all sensitive content before pushing.
+- **Adding Content**: Edit HTML files directly, following existing class naming (`newsletter-signup`, `featured-grid`, etc.)
+- **Styling Changes**: Modify CSS custom properties in `:root` for consistent theming
+- **New Pages**: Copy existing page structure, update navigation links across all 5 pages
+- **Manuscript Work**: Use PowerShell script in `Manuscript/` directory, never commit generated PDFs
 
 ---
 

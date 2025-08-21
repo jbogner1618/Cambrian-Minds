@@ -1,0 +1,78 @@
+name: Newsletter Content Automation
+
+on:
+  push:
+    branches: [ main ]
+    paths: 
+      - 'articles/*.md'
+      - 'articles/*.html'
+  workflow_dispatch:
+
+jobs:
+  update-content:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          
+      - name: Check for new articles
+        run: |
+          echo "Checking for new article content..."
+          
+          # Count markdown files in articles directory
+          ARTICLE_COUNT=$(find articles -name "*.md" -not -name "README.md" | wc -l)
+          echo "Found $ARTICLE_COUNT articles"
+          
+          # Create a simple RSS-style feed for newsletter automation
+          cat > newsletter-feed.json << EOF
+          {
+            "site": "justintbogner.com",
+            "title": "The Serpent's Sentence - Essays on Consciousness and AI",
+            "description": "Essays exploring consciousness, artificial intelligence, and the narratives that shape human experience",
+            "updated": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "articles": [
+          EOF
+          
+          # Add each article to the feed
+          first=true
+          for file in articles/*.md; do
+            if [[ "$file" != "articles/README.md" ]]; then
+              if [ "$first" = true ]; then
+                first=false
+              else
+                echo "," >> newsletter-feed.json
+              fi
+              
+              filename=$(basename "$file" .md)
+              title=$(head -1 "$file" | sed 's/^# //')
+              
+              cat >> newsletter-feed.json << EOF
+              {
+                "title": "$title",
+                "url": "https://jbogner1618.github.io/justintbogner-website/${filename}.html",
+                "file": "$filename",
+                "updated": "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+              }
+          EOF
+            fi
+          done
+          
+          echo "" >> newsletter-feed.json
+          echo "    ]" >> newsletter-feed.json
+          echo "}" >> newsletter-feed.json
+          
+          echo "Newsletter feed created:"
+          cat newsletter-feed.json
+          
+      - name: Commit feed if changed
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add newsletter-feed.json
+          git diff --staged --quiet || git commit -m "Update newsletter feed [automated]"
+          git push || true
