@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Articles - Justin T. Bogner</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-black: #0a0a0a;
+            --black: #121212;
+            --grey-900: #1a1a1a;
+            --grey-800: #2a2a2a;
+            --grey-700: #3a3a3a;
+            --grey-600: #4a4a4a;
+            --grey-500: #6a6a6a;
+            --grey-400: #8a8a8a;
+            --grey-300: #aaaaaa;
+            --grey-200: #cccccc;
+            --grey-100: #e5e5e5;
+            --white: #ffffff;
+            
+            --accent: #3b82f6;
+            --secondary-accent: #06b6d4;
+            --tertiary-accent: #8b5cf6;
+            --glow-blue: rgba(59, 130, 246, 0.15);
+            
+            --text-primary: var(--grey-100);
+            --text-secondary: var(--grey-300);
+            --text-tertiary: var(--grey-500);
+            
+            --float-duration: 6s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--deep-black);
+            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.7;
+            overflow-x: hidden;
+            font-weight: 300;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Navigation */
+        .navigation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--grey-800);
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .brand-symbol {
+            font-size: 1.5rem;
+            animation: float var(--float-duration) ease-in-out infinite;
+        }
+
+        .brand h1 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 0.5rem;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            font-weight: 400;
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--text-primary);
+            background: var(--glow-blue);
+        }
+
+        /* Articles Page Styles */
+        .page-header {
+            padding: 120px 0 60px;
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent), var(--secondary-accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-description {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .articles-grid {
+            padding: 60px 0;
+        }
+
+        .articles-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .article-card {
+            background: var(--grey-900);
+            border: 1px solid var(--grey-800);
+            border-radius: 0.5rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .article-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.2);
+        }
+
+        .article-content {
+            padding: 2rem;
+        }
+
+        .article-category {
+            color: var(--accent);
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .article-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .article-excerpt {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-tertiary);
+            font-size: 0.9rem;
+        }
+
+        .read-time {
+            color: var(--text-tertiary);
+        }
+
+        .article-date {
+            color: var(--text-tertiary);
+        }
+
+        .featured-article {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, var(--grey-900), var(--grey-800));
+            border: 1px solid var(--accent);
+        }
+
+        .featured-article .article-content {
+            padding: 3rem;
+        }
+
+        .featured-article .article-title {
+            font-size: 2rem;
+        }
+
+        .featured-badge {
+            background: var(--accent);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .newsletter-section {
+            padding: 80px 0;
+            background: var(--grey-900);
+            text-align: center;
+        }
+
+        .newsletter-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .newsletter-description {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .newsletter-signup {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .newsletter-signup label {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .newsletter-signup input {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border: 1px solid var(--grey-600);
+            background: var(--grey-800);
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .newsletter-signup button {
+            width: 100%;
+            background: linear-gradient(135deg, var(--accent), var(--secondary-accent));
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-signup button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+        }
+
+        .newsletter-signup p {
+            color: var(--text-tertiary);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        .fade-in-up {
+            animation: fade-in-up 0.8s ease-out;
+        }
+
+        @keyframes fade-in-up {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .articles-container {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-article .article-content {
+                padding: 2rem;
+            }
+
+            .featured-article .article-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navigation">
+        <div class="nav-container">
+            <a href="index.html" class="brand">
+                <span class="brand-symbol">🐍</span>
+                <h1>Justin T. Bogner</h1>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="book.html">Book</a></li>
+                <li><a href="articles.html" class="active">Articles</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section class="page-header">
+            <div class="container">
+                <h1 class="page-title fade-in-up">Essays & Ideas</h1>
+                <p class="page-description fade-in-up">Exploring consciousness, artificial intelligence, and the narratives that shape our understanding of what it means to be human in an age of intelligent machines.</p>
+            </div>
+        </section>
+
+        <section class="articles-grid">
+            <div class="container">
+                <div class="articles-container">
+                    <!-- Featured Article -->
+                    <article class="article-card featured-article fade-in-up">
+                        <div class="article-content">
+                            <span class="featured-badge">Featured</span>
+                            <div class="article-category">Consciousness</div>
+                            <h2 class="article-title">The Voice in Your Head Is Not You</h2>
+                            <p class="article-excerpt">We mistake the narrator for the author, the commentary for the experience itself. But what if consciousness isn't the voice that speaks—what if it's simply the compulsion to keep listening? An exploration of how our inner monologue creates the illusion of a unified self.</p>
+                            <div class="article-meta">
+                                <span class="read-time">8 min read</span>
+                                <span class="article-date">December 2024</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Regular Articles -->
+                    <article class="article-card fade-in-up">
+                        <div class="article-content">
+                            <div class="article-category">AI & Society</div>
+                            <h2 class="article-title">Humans: Trilobites of Consciousness?</h2>
+                            <p class="article-excerpt">Trilobites dominated Earth's oceans for 270 million years before vanishing. They were wildly successful—until they weren't. As artificial intelligence emerges, are we witnessing the beginning of consciousness evolution's next chapter?</p>
+                            <div class="article-meta">
+                                <span class="read-time">6 min read</span>
+                                <span class="article-date">November 2024</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="article-card fade-in-up">
+                        <div class="article-content">
+                            <div class="article-category">Philosophy</div>
+                            <h2 class="article-title">Why AI Will Never Experience 'I'</h2>
+                            <p class="article-excerpt">The fundamental asymmetry between artificial and biological consciousness lies not in processing power or complexity, but in the nature of experience itself. Why subjective awareness might be forever beyond the reach of silicon minds.</p>
+                            <div class="article-meta">
+                                <span class="read-time">10 min read</span>
+                                <span class="article-date">October 2024</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="article-card fade-in-up">
+                        <div class="article-content">
+                            <div class="article-category">Cognitive Science</div>
+                            <h2 class="article-title">The Autoregressive Mind</h2>
+                            <p class="article-excerpt">Language models predict the next token. Consciousness predicts the next moment. The parallels run deeper than we might expect, revealing something profound about the nature of thought itself.</p>
+                            <div class="article-meta">
+                                <span class="read-time">7 min read</span>
+                                <span class="article-date">September 2024</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="article-card fade-in-up">
+                        <div class="article-content">
+                            <div class="article-category">Technology</div>
+                            <h2 class="article-title">The Symbiotic Future</h2>
+                            <p class="article-excerpt">We're not heading toward AI replacing humans, but toward a new form of hybrid intelligence. What this partnership might look like and how we can prepare for a world where biological and artificial minds complement each other.</p>
+                            <div class="article-meta">
+                                <span class="read-time">9 min read</span>
+                                <span class="article-date">August 2024</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="article-card fade-in-up">
+                        <div class="article-content">
+                            <div class="article-category">Narrative</div>
+                            <h2 class="article-title">Stories All the Way Down</h2>
+                            <p class="article-excerpt">From personal identity to scientific theories, everything we think we know is built on narrative structures. How the stories we tell ourselves shape not just our beliefs, but the very nature of truth itself.</p>
+                            <div class="article-meta">
+                                <span class="read-time">5 min read</span>
+                                <span class="article-date">July 2024</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="newsletter-section">
+            <div class="container">
+                <h2 class="newsletter-title fade-in-up">Stay Connected</h2>
+                <p class="newsletter-description fade-in-up">Get new essays delivered to your inbox. Join a community exploring the deepest questions about consciousness, technology, and human nature.</p>
+                <div class="newsletter-signup fade-in-up">
+                    <form action="#" method="post">
+                        <label for="newsletter-email">Join the conversation</label>
+                        <input type="email" id="newsletter-email" name="email" placeholder="Your email address" required>
+                        <button type="submit">Subscribe</button>
+                        <p>No spam. Unsubscribe anytime.</p>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

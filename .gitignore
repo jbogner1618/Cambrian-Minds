@@ -1,0 +1,3 @@
+# Prevent manuscript files from being tracked or published
+Manuscript/
+!README.md

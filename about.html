@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Justin T. Bogner</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-black: #0a0a0a;
+            --black: #121212;
+            --grey-900: #1a1a1a;
+            --grey-800: #2a2a2a;
+            --grey-700: #3a3a3a;
+            --grey-600: #4a4a4a;
+            --grey-500: #6a6a6a;
+            --grey-400: #8a8a8a;
+            --grey-300: #aaaaaa;
+            --grey-200: #cccccc;
+            --grey-100: #e5e5e5;
+            --white: #ffffff;
+            
+            --accent: #3b82f6;
+            --secondary-accent: #06b6d4;
+            --tertiary-accent: #8b5cf6;
+            --glow-blue: rgba(59, 130, 246, 0.15);
+            
+            --text-primary: var(--grey-100);
+            --text-secondary: var(--grey-300);
+            --text-tertiary: var(--grey-500);
+            
+            --float-duration: 6s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--deep-black);
+            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.7;
+            overflow-x: hidden;
+            font-weight: 300;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Navigation */
+        .navigation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--grey-800);
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .brand-symbol {
+            font-size: 1.5rem;
+            animation: float var(--float-duration) ease-in-out infinite;
+        }
+
+        .brand h1 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 0.5rem;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            font-weight: 400;
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--text-primary);
+            background: var(--glow-blue);
+        }
+
+        /* About Page Styles */
+        .about-hero {
+            padding: 120px 0 80px;
+            text-align: center;
+        }
+
+        .hero-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin: 0 auto 2rem;
+            background: linear-gradient(135deg, var(--grey-800), var(--grey-700));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border: 1px solid var(--grey-600);
+        }
+
+        .about-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent), var(--secondary-accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .about-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto 3rem;
+        }
+
+        .bio-section {
+            padding: 80px 0;
+        }
+
+        .bio-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+
+        .bio-text {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .core-ideas {
+            padding: 80px 0;
+            background: var(--grey-900);
+        }
+
+        .ideas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .idea-card {
+            background: var(--grey-800);
+            padding: 2rem;
+            border-radius: 0.5rem;
+            border-left: 4px solid var(--accent);
+        }
+
+        .idea-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .idea-description {
+            color: var(--text-secondary);
+        }
+
+        .credentials {
+            padding: 80px 0;
+        }
+
+        .credentials-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .credentials-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .credential-item {
+            background: var(--grey-900);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            border: 1px solid var(--grey-800);
+        }
+
+        .credential-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .credential-details {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .connect-section {
+            padding: 80px 0;
+            background: var(--grey-900);
+            text-align: center;
+        }
+
+        .connect-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .connect-description {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .connect-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--accent), var(--secondary-accent));
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--grey-800);
+            border: 1px solid var(--grey-600);
+        }
+
+        .btn-secondary:hover {
+            background: var(--grey-700);
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        .fade-in-up {
+            animation: fade-in-up 0.8s ease-out;
+        }
+
+        @keyframes fade-in-up {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .about-title {
+                font-size: 2rem;
+            }
+
+            .hero-image {
+                width: 150px;
+                height: 150px;
+            }
+
+            .ideas-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .credentials-list {
+                grid-template-columns: 1fr;
+            }
+
+            .connect-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navigation">
+        <div class="nav-container">
+            <a href="index.html" class="brand">
+                <span class="brand-symbol">🐍</span>
+                <h1>Justin T. Bogner</h1>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="book.html">Book</a></li>
+                <li><a href="articles.html">Articles</a></li>
+                <li><a href="about.html" class="active">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section class="about-hero">
+            <div class="container">
+                <div class="hero-image fade-in-up">
+                    [Author Photo]
+                </div>
+                <h1 class="about-title fade-in-up">About Justin</h1>
+                <p class="about-subtitle fade-in-up">Exploring the intersection of consciousness, technology, and the narratives that define human experience in an age of artificial intelligence.</p>
+            </div>
+        </section>
+
+        <section class="bio-section">
+            <div class="container">
+                <div class="bio-content fade-in-up">
+                    <h2 class="section-title">The Journey</h2>
+                    <p class="bio-text">Justin T. Bogner is a philosopher and theorist whose work sits at the fascinating intersection of cognitive science, artificial intelligence, and the deep narratives that shape human understanding. His exploration of consciousness began with a simple question: if we can build machines that think, what does that tell us about how we think?</p>
+                    
+                    <p class="bio-text">Through years of research and contemplation, Bogner has developed a radical new framework for understanding consciousness—not as a unified, controlling entity, but as an autoregressive process that mirrors the predictive patterns we see in advanced language models. This insight forms the core of his groundbreaking book, "The Serpent's Sentence."</p>
+                    
+                    <p class="bio-text">Bogner's work is characterized by its interdisciplinary approach, drawing from neuroscience, philosophy of mind, computer science, and narrative theory to construct a comprehensive view of human consciousness. His writing makes complex ideas accessible without sacrificing intellectual rigor, speaking to both academic audiences and curious minds seeking to understand their place in an increasingly AI-integrated world.</p>
+                    
+                    <p class="bio-text">Beyond his theoretical work, Bogner is deeply interested in the practical implications of AI consciousness research. He believes we are entering a period of unprecedented collaboration between human and artificial intelligence, and his work aims to prepare us for this symbiotic future.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="core-ideas">
+            <div class="container">
+                <h2 class="section-title fade-in-up">Core Ideas</h2>
+                <div class="ideas-grid">
+                    <div class="idea-card fade-in-up">
+                        <h3 class="idea-title">Autoregressive Consciousness</h3>
+                        <p class="idea-description">Consciousness operates like a language model, constantly predicting and generating the next moment of experience. The "self" is not the author of thoughts but their first reader.</p>
+                    </div>
+                    
+                    <div class="idea-card fade-in-up">
+                        <h3 class="idea-title">The Narrative Self</h3>
+                        <p class="idea-description">Personal identity emerges from the stories we tell ourselves about ourselves. These narratives shape not just how we see the world, but how we experience it.</p>
+                    </div>
+                    
+                    <div class="idea-card fade-in-up">
+                        <h3 class="idea-title">Symbiotic Intelligence</h3>
+                        <p class="idea-description">The future isn't human vs. AI, but human with AI. We're evolving toward a new form of hybrid consciousness that leverages the strengths of both biological and artificial minds.</p>
+                    </div>
+                    
+                    <div class="idea-card fade-in-up">
+                        <h3 class="idea-title">The Illusion of Authorship</h3>
+                        <p class="idea-description">We experience ourselves as the authors of our thoughts and decisions, but neuroscience reveals that consciousness is more observer than creator—awareness arriving after the fact.</p>
+                    </div>
+                    
+                    <div class="idea-card fade-in-up">
+                        <h3 class="idea-title">Evolutionary Consciousness</h3>
+                        <p class="idea-description">Consciousness is not a fixed phenomenon but an evolving one. As we create artificial minds, we're participating in the next chapter of consciousness evolution.</p>
+                    </div>
+                    
+                    <div class="idea-card fade-in-up">
+                        <h3 class="idea-title">The Serpent's Sentence</h3>
+                        <p class="idea-description">Language and thought form an ouroboros—a self-consuming loop where each word devours the last while birthing the next. This is the fundamental pattern of conscious experience.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="credentials">
+            <div class="container">
+                <div class="credentials-content fade-in-up">
+                    <h2 class="section-title">Background & Expertise</h2>
+                    <div class="credentials-list">
+                        <div class="credential-item">
+                            <div class="credential-title">Philosophy of Mind</div>
+                            <div class="credential-details">Extensive research in consciousness studies, cognitive science, and the hard problem of subjective experience.</div>
+                        </div>
+                        
+                        <div class="credential-item">
+                            <div class="credential-title">AI & Machine Learning</div>
+                            <div class="credential-details">Deep understanding of neural networks, language models, and the philosophical implications of artificial intelligence.</div>
+                        </div>
+                        
+                        <div class="credential-item">
+                            <div class="credential-title">Narrative Theory</div>
+                            <div class="credential-details">Exploration of how stories shape cognition, identity, and our understanding of reality itself.</div>
+                        </div>
+                        
+                        <div class="credential-item">
+                            <div class="credential-title">Interdisciplinary Research</div>
+                            <div class="credential-details">Synthesizing insights from neuroscience, psychology, computer science, and philosophy to build comprehensive theories.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="connect-section">
+            <div class="container">
+                <h2 class="connect-title fade-in-up">Let's Connect</h2>
+                <p class="connect-description fade-in-up">Interested in discussing consciousness, AI, or the future of human-machine collaboration? I'd love to hear from you.</p>
+                <div class="connect-actions fade-in-up">
+                    <a href="contact.html" class="btn">Get In Touch</a>
+                    <a href="articles.html" class="btn btn-secondary">Read My Essays</a>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

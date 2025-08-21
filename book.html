@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Serpent's Sentence - Justin T. Bogner</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-black: #0a0a0a;
+            --black: #121212;
+            --grey-900: #1a1a1a;
+            --grey-800: #2a2a2a;
+            --grey-700: #3a3a3a;
+            --grey-600: #4a4a4a;
+            --grey-500: #6a6a6a;
+            --grey-400: #8a8a8a;
+            --grey-300: #aaaaaa;
+            --grey-200: #cccccc;
+            --grey-100: #e5e5e5;
+            --white: #ffffff;
+            
+            --accent: #3b82f6;
+            --secondary-accent: #06b6d4;
+            --tertiary-accent: #8b5cf6;
+            --glow-blue: rgba(59, 130, 246, 0.15);
+            
+            --text-primary: var(--grey-100);
+            --text-secondary: var(--grey-300);
+            --text-tertiary: var(--grey-500);
+            
+            --float-duration: 6s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--deep-black);
+            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.7;
+            overflow-x: hidden;
+            font-weight: 300;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Navigation */
+        .navigation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--grey-800);
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .brand-symbol {
+            font-size: 1.5rem;
+            animation: float var(--float-duration) ease-in-out infinite;
+        }
+
+        .brand h1 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 0.5rem;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            font-weight: 400;
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--text-primary);
+            background: var(--glow-blue);
+        }
+
+        /* Book Page Specific Styles */
+        .book-hero {
+            padding: 120px 0 80px;
+            text-align: center;
+        }
+
+        .book-cover {
+            width: 300px;
+            height: 450px;
+            margin: 0 auto 2rem;
+            background: linear-gradient(135deg, var(--grey-800), var(--grey-700));
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border: 1px solid var(--grey-600);
+        }
+
+        .book-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent), var(--secondary-accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .book-subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .book-description {
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+        }
+
+        .book-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--accent), var(--secondary-accent));
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--grey-800);
+            border: 1px solid var(--grey-600);
+        }
+
+        .btn-secondary:hover {
+            background: var(--grey-700);
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.1);
+        }
+
+        .book-details {
+            padding: 80px 0;
+            background: var(--grey-900);
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .excerpt {
+            background: var(--grey-800);
+            padding: 2rem;
+            border-radius: 0.5rem;
+            border-left: 4px solid var(--accent);
+        }
+
+        .excerpt-text {
+            font-style: italic;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .excerpt-cite {
+            color: var(--text-tertiary);
+            font-size: 0.9rem;
+        }
+
+        .endorsements {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .endorsement {
+            background: var(--grey-800);
+            padding: 2rem;
+            border-radius: 0.5rem;
+        }
+
+        .endorsement-text {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .endorsement-author {
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .newsletter-cta {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .newsletter-signup {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .newsletter-signup label {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .newsletter-signup input {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border: 1px solid var(--grey-600);
+            background: var(--grey-800);
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .newsletter-signup button {
+            width: 100%;
+        }
+
+        .newsletter-signup p {
+            color: var(--text-tertiary);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .newsletter-description {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        .fade-in-up {
+            animation: fade-in-up 0.8s ease-out;
+        }
+
+        @keyframes fade-in-up {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .details-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .book-title {
+                font-size: 2rem;
+            }
+
+            .book-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .book-cover {
+                width: 240px;
+                height: 360px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navigation">
+        <div class="nav-container">
+            <a href="index.html" class="brand">
+                <span class="brand-symbol">🐍</span>
+                <h1>Justin T. Bogner</h1>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="book.html" class="active">Book</a></li>
+                <li><a href="articles.html">Articles</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section class="book-hero">
+            <div class="container">
+                <div class="book-cover fade-in-up">
+                    [Book Cover Placeholder]
+                </div>
+                <h1 class="book-title fade-in-up">The Serpent's Sentence</h1>
+                <p class="book-subtitle fade-in-up">A Theory of Consciousness, Autoregression, and the Narrative Self</p>
+                <div class="book-description fade-in-up">
+                    <p>What if consciousness itself is nothing more than an autoregressive process—a story we tell ourselves, one word at a time? In this groundbreaking exploration of cognitive science and artificial intelligence, Justin T. Bogner unveils a radical new framework for understanding the human mind.</p>
+                    <p>Drawing on cutting-edge research in neuroscience, philosophy, and AI, <em>The Serpent's Sentence</em> argues that our sense of self is not a unified entity but an emergent narrative pattern, constantly predicting and generating the next moment of experience. As we stand on the threshold of artificial general intelligence, this book offers both a mirror to understand ourselves and a map to navigate our symbiotic future with machines.</p>
+                </div>
+                <div class="book-actions fade-in-up">
+                    <a href="#" class="btn">Pre-order Now</a>
+                    <a href="/public-website-package/excerpt.pdf" class="btn btn-secondary">Download Excerpt</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="book-details">
+            <div class="container">
+                <div class="details-grid">
+                    <div class="excerpt-section fade-in-up">
+                        <h2 class="section-title">From the Book</h2>
+                        <div class="excerpt">
+                            <p class="excerpt-text">"We are not the authors of our thoughts, but their first readers. Consciousness is not the driver of the mind, but its most compelling passenger—forever convinced it knows the destination, never realizing it's simply along for the ride."</p>
+                            <p class="excerpt-cite">— Chapter 3: The Illusion of Authorship</p>
+                        </div>
+                        <div class="excerpt">
+                            <p class="excerpt-text">"In the serpent's sentence, each word devours the last while birthing the next. This is not a metaphor for consciousness—this is consciousness itself, an autoregressive loop that mistakes its own output for profound truth."</p>
+                            <p class="excerpt-cite">— Chapter 7: The Serpent's Sentence</p>
+                        </div>
+                    </div>
+
+                    <div class="endorsements-section fade-in-up">
+                        <h2 class="section-title">Advance Praise</h2>
+                        <div class="endorsements">
+                            <div class="endorsement">
+                                <p class="endorsement-text">"A brilliantly provocative exploration of consciousness that will fundamentally change how you think about thinking itself."</p>
+                                <p class="endorsement-author">— [Notable Endorser, Title]</p>
+                            </div>
+                            <div class="endorsement">
+                                <p class="endorsement-text">"Bogner has written the most important book on consciousness since Hofstadter's Gödel, Escher, Bach. Essential reading for anyone interested in the future of human-AI collaboration."</p>
+                                <p class="endorsement-author">— [Notable Endorser, Title]</p>
+                            </div>
+                            <div class="endorsement">
+                                <p class="endorsement-text">"This book doesn't just explain consciousness—it demonstrates it in action. A masterwork of philosophical clarity and scientific rigor."</p>
+                                <p class="endorsement-author">— [Notable Endorser, Title]</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="newsletter-cta">
+            <div class="container">
+                <h2 class="section-title fade-in-up">Stay Updated</h2>
+                <p class="newsletter-description fade-in-up">Get notified when the book is available, plus exclusive essays on consciousness, AI, and our evolving relationship with intelligence.</p>
+                <div class="newsletter-signup fade-in-up">
+                    <form action="#" method="post">
+                        <label for="newsletter-email">Join the conversation</label>
+                        <input type="email" id="newsletter-email" name="email" placeholder="Your email address" required>
+                        <button type="submit" class="btn">Notify Me</button>
+                        <p>No spam. Unsubscribe anytime.</p>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
